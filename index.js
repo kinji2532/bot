@@ -5,7 +5,7 @@ const request = require('request');
 
 function jsoncheck(name){
   try{
-    let txt = fs.roadFileSync(name,'utf-8');
+    let txt = fs.readFileSync(name,'utf-8');
     JSON.parse(txt)
   }catch{
     return "error! jsonに不備があります"
@@ -30,7 +30,7 @@ client.on('message', message=>{
       write.on('finish',()=>{
         if(filename.slice(-5) == ".json"){
           message.channel.send(jsoncheck(filename))
-          message.channel.send(fs.roadFileSync(filename,'utf-8'))
+          message.channel.send(fs.readFileSync(filename,'utf-8'))
           fs.unlinkSync(filename);
         }
       })
