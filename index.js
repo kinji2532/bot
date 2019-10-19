@@ -8,9 +8,9 @@ function jsonchecker(name){
     let txt = fs.readFileSync(name,'utf-8');
     JSON.parse(txt)
   }catch{
-    return "error! jsonに不備があります"
+    return "おっと jsonに不備があるようだ"
   }
-  return "ok! jsonに異常はありません"
+  return "大丈夫 jsonに異常はないぜ"
 }
 
 client.on('ready', ()=>{
