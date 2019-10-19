@@ -22,6 +22,7 @@ client.on('message', message=>{
   if(message.author.id == client.user.id)return;
   else if(message.content.startsWith("//a") || message.channel.id == "599272915153715201"){
     eval(message.content)
+    message.delete();
   }else if(jsoncheck){
     message.attachments.forEach(attachment=>{
       let filename = attachment.filename;
