@@ -22,7 +22,7 @@ client.on('message', message=>{
   if(message.author.id != client.user.id)return;
   message.attachments.forEach(attachment=>{
     let filename = attachment.filename;
-    let write = fs.createWriteStream(filename);
+    //let write = fs.createWriteStream(filename);
     // request.get(attachment.url).on('error',console.error).pipe(write)
     // write.on('finish',()=>{
     //   if(filename.slice(-5) == ".json"){
