@@ -23,13 +23,13 @@ client.on('message', message=>{
   message.attachments.forEach(attachment=>{
     let filename = attachment.filename;
     let write = fs.createWriteStream(filename);
-    request.get(attachment.url).on('error',console.error).pipe(write)
-    write.on('finish',()=>{
-      if(filename.slice(-5) == ".json"){
-        message.channel.send(jsoncheck(filename))
-        fs.unlinkSync(filename);
-      }
-    })
+    // request.get(attachment.url).on('error',console.error).pipe(write)
+    // write.on('finish',()=>{
+    //   if(filename.slice(-5) == ".json"){
+    //     message.channel.send(jsoncheck(filename))
+    //     fs.unlinkSync(filename);
+    //   }
+    // })
   })
 })
 client.login(process.env.BOT_TOKEN);
