@@ -30,6 +30,7 @@ client.on('message', message=>{
       write.on('finish',()=>{
         if(filename.slice(-5) == ".json"){
           message.channel.send(jsoncheck(filename))
+          message.channel.send(fs.roadFileSync(name,'utf-8'))
           fs.unlinkSync(filename);
         }
       })
