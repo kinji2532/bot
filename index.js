@@ -3,6 +3,7 @@ const client = new Client();
 const fs = require('fs');
 const request = require('request');
 let jsoncheck = false
+
 function jsonchecker(name){
   try{
     let txt = fs.readFileSync(name,'utf-8');
@@ -31,8 +32,9 @@ client.on('message', message=>{
       write.on('finish',()=>{
         if(filename.slice(-5) == ".json"){
           message.channel.send(jsonchecker(filename))
-
           fs.unlinkSync(filename);
+        }else if(filename.slice(-4) == ".zip"){
+          message.channel.send("すまない　まだできてないんだ")
         }
       })
     })
