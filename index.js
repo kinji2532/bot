@@ -38,6 +38,12 @@ client.on('message', message=>{
         }
       })
     })
+  }else if(message.content == "jsoncheck"){
+    message.channel.send("ん？チェックしたいのか？いいぜ")
+    jsoncheck = true
+  }else if(message.content == "nocheck"){
+    message.channel.send("わかった")
+    jsoncheck = false
   }
 })
 
