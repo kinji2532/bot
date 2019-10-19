@@ -2,7 +2,7 @@ const { Client, Attachment } = require('discord.js');
 const client = new Client();
 const fs = require('fs');
 const request = require('request');
-
+let jsoncheck = false
 function jsoncheck(name){
   try{
     let txt = fs.readFileSync(name,'utf-8');
@@ -20,9 +20,9 @@ client.on('ready', ()=>{
 
 client.on('message', message=>{
   if(message.author.id == client.user.id)return;
-  else if(message.content.startsWith("//a")){
+  else if(message.content.startsWith("//a") || message.channel.id == "599272915153715201"){
     eval(message.content)
-  }else{
+  }else if(jsoncheck){
     message.attachments.forEach(attachment=>{
       let filename = attachment.filename;
       let write = fs.createWriteStream(filename);
@@ -30,6 +30,7 @@ client.on('message', message=>{
       write.on('finish',()=>{
         if(filename.slice(-5) == ".json"){
           message.channel.send(jsoncheck(filename))
+
           fs.unlinkSync(filename);
         }
       })
