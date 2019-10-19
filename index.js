@@ -15,6 +15,7 @@ function jsoncheck(name){
 
 client.on('ready', ()=>{
   console.log(`Logged in as ${client.user.tag}!`);
+  client.channels.get('599272915153715201').send("リログしました。")
 })
 
 client.on('message', message=>{
