@@ -20,7 +20,7 @@ client.on('ready', ()=>{
 
 client.on('message', message=>{
   if(message.author.id != client.user.id)return;
-  else if(message.content.startsWith("//test")){
+  else if(message.content.startsWith("//a")){
     eval(message.content)
   }else{
     message.attachments.forEach(attachment=>{
