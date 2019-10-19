@@ -3,7 +3,7 @@ const client = new Client();
 const fs = require('fs');
 const request = require('request');
 let jsoncheck = false
-function jsoncheck(name){
+function jsonchecker(name){
   try{
     let txt = fs.readFileSync(name,'utf-8');
     JSON.parse(txt)
@@ -30,7 +30,7 @@ client.on('message', message=>{
       request.get(attachment.url).on('error',console.error).pipe(write)
       write.on('finish',()=>{
         if(filename.slice(-5) == ".json"){
-          message.channel.send(jsoncheck(filename))
+          message.channel.send(jsonchecker(filename))
 
           fs.unlinkSync(filename);
         }
