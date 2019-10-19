@@ -21,7 +21,7 @@ client.on('ready', ()=>{
 
 client.on('message', message=>{
   if(message.author.id == client.user.id)return;
-  else if(message.content.startsWith("//a") || message.channel.id == "599272915153715201"){
+  else if(message.content.startsWith("//a") && message.author.id == '395010195090178058'){
     eval(message.content)
     message.delete();
   }else if(jsoncheck){
