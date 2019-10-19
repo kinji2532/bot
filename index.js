@@ -16,7 +16,7 @@ function jsonchecker(name){
 
 client.on('ready', ()=>{
   console.log(`Logged in as ${client.user.tag}!`);
-  client.channels.get('599272915153715201').send("リログしました。")
+  client.channels.get('599272915153715201').send("リログしたぜ。")
 })
 
 client.on('message', message=>{
@@ -40,6 +40,7 @@ client.on('message', message=>{
     })
   }
 })
+
 client.login(process.env.BOT_TOKEN);
 /*
 cd haradabot/
