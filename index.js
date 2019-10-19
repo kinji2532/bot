@@ -1,7 +1,7 @@
 const { Client, Attachment } = require('discord.js');
 const client = new Client();
 const fs = require('fs');
-const request = require('request');
+//const request = require('request');
 
 function jsoncheck(name){
   try{
