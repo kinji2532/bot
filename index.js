@@ -58,7 +58,9 @@ client.on('message', message=>{
   }else if(message.content == "uni"){
     message.attachments.forEach(attachment=>{
       let filename = attachment.filename;
-      fs.unlinkSync(filename);
+      try{
+        fs.unlinkSync(filename);
+      }catch{}
       let write = fs.createWriteStream(filename);
       request.get(attachment.url).on('error',console.error).pipe(write)
       write.on('finish',()=>{
