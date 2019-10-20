@@ -13,6 +13,23 @@ function jsonchecker(name){
   }
   return "大丈夫 jsonに異常はないぜ"
 }
+function unicode(name){
+  let txt = fs.readFileSync(name,'utf-8');
+  txt = text.replace(/"(.*?)"/g,function(){
+    let codes = []
+    let code = arguments[0].replace(/"/g,'')
+    for(let i = 0;i < code.length;i ++){
+      codes.push(('0000' + code.charCodeAt(i).toString(16)).substr(-4));
+    }
+    return `"\u${codes.jpin('\u')}"`;
+  })
+  fs.writeFileSync(name,txt,function(err){
+    if(err){
+      throw err;
+    }
+  });
+  return `"${name}"`
+}
 
 client.on('ready', ()=>{
   console.log(`Logged in as ${client.user.tag}!`);
@@ -34,8 +51,18 @@ client.on('message', message=>{
           message.channel.send(jsonchecker(filename))
           fs.unlinkSync(filename);
         }else if(filename.slice(-4) == ".zip"){
-          message.channel.send("すまない　まだできてないんだ")
+          message.channel.send("すまない まだできてないんだ")
         }
+      })
+    })
+  }else if(message.content == "uni"){
+    message.attachments.forEach(attachment=>{
+      let filename = attachment.filename;
+      let write = fs.createWriteStream(filename);
+      request.get(attachment.url).on('error',console.error).pipe(write)
+      write.on('finish',()=>{
+        message.channel.send({ files:[unicode(filename)]})
+        fs.unlinkSync(filename);
       })
     })
   }
