@@ -26,11 +26,10 @@ function unicode(name,message){
   fs.writeFile(name,txt,function(err){
     if(err){
       throw err;
+    }else{
+      message.channel.send({ files: [name] })
+      fs.unlinkSync(name)
     }
-  });
-  message.channel.send({ files: [name] })
-  name.on('finish',()=>{
-    fs.unlinkSync(name);
   });
 }
 
