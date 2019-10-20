@@ -36,31 +36,24 @@ client.on('message', message=>{
   else if(message.content.startsWith("//a") && message.author.id == '395010195090178058'){
     eval(message.content)
     message.delete();
-  }else if(message.content == "check"){
-    message.attachments.forEach(attachment=>{
-      let filename = attachment.filename;
-      let write = fs.createWriteStream(filename);
-      request.get(attachment.url).on('error',console.error).pipe(write)
-      write.on('finish',()=>{
+  message.attachments.forEach(attachment=>{
+    let filename = attachment.filename;
+    let write = fs.createWriteStream(filename);
+    request.get(attachment.url).on('error',console.error).pipe(write)
+    write.on('finish',()=>{
+      if(message.content == "check"){
         if(filename.slice(-5) == ".json"){
           message.channel.send(jsonchecker(filename))
           fs.unlinkSync(filename);
         }else if(filename.slice(-4) == ".zip"){
           message.channel.send("すまない まだできてないんだ")
         }
-      })
-    })
-  }else if(message.content == "uni"){
-    message.attachments.forEach(attachment=>{
-      let filename = attachment.filename;
-      let write = fs.createWriteStream(filename);
-      request.get(attachment.url).on('error',console.error).pipe(write)
-      write.on('finish',()=>{
+      }else if(message.content == "uni"){
         unicode(filename);
         message.channel.send({ files:[filename] }).then(()=>{ fs.unlinkSync(filename) })
-      })
+      }
     })
-  }
+  })
 })
 
 client.login(process.env.BOT_TOKEN);
