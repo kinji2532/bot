@@ -24,13 +24,7 @@ client.on('message', message=>{
   else if(message.content.startsWith("//a") && message.author.id == '395010195090178058'){
     eval(message.content)
     message.delete();
-  }else if(message.content == "jsoncheck"){
-    message.channel.send("ん？チェックしたいのか？いいぜ")
-    jsoncheck = true
-  }else if(message.content == "nocheck"){
-    message.channel.send("わかった")
-    jsoncheck = false
-  }else if(jsoncheck || message.content == "check"){
+  }else if(message.content == "check"){
     message.attachments.forEach(attachment=>{
       let filename = attachment.filename;
       let write = fs.createWriteStream(filename);
