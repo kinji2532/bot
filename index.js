@@ -62,6 +62,7 @@ client.on('message', message=>{
       request.get(attachment.url).on('error',console.error).pipe(write)
       write.on('finish',()=>{
         unicode(filename,message)
+        fs.unlinkSync(filename);
       })
     })
   }
