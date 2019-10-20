@@ -31,7 +31,7 @@ function unicode(name,message){
   message.channel.send({ files: [name] })
   name.on('finish',()=>{
     fs.unlinkSync(name);
-  }
+  });
 }
 
 client.on('ready', ()=>{
