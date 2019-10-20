@@ -10,6 +10,9 @@
   "license": "ISC",
   "dependencies": {
     "discord.js": "^11.5.1",
-    "request": "^2.88.0"
+    "node-unzip-2": "^0.2.8",
+    "request": "^2.88.0",
+    "rimraf": "^3.0.0",
+    "zip-folder": "^1.0.0"
   }
 }

@@ -13,7 +13,7 @@ function jsonchecker(name){
   }
   return "大丈夫 jsonに異常はないぜ"
 }
-function unicode(name,message){
+function unicode(name){
   let txt = fs.readFileSync(name,'utf-8');
   txt = txt.replace(/"(.*?)"/g,function(){
     let codes = []
@@ -23,12 +23,7 @@ function unicode(name,message){
     }
     return `"\\u${codes.join('\\u')}"`;
   })
-  fs.writeFileSync(name,txt,function(err){
-    if(err){
-      throw err;
-    }
-  });
-  message.channel.send({ files: [name] })
+  fs.writeFileSync(name,txt);
 }
 
 client.on('ready', ()=>{
@@ -58,13 +53,11 @@ client.on('message', message=>{
   }else if(message.content == "uni"){
     message.attachments.forEach(attachment=>{
       let filename = attachment.filename;
-      try{
-        fs.unlinkSync(filename);
-      }catch{}
       let write = fs.createWriteStream(filename);
       request.get(attachment.url).on('error',console.error).pipe(write)
       write.on('finish',()=>{
-        unicode(filename,message)
+        unicode(filename);
+        message.channel.send({ files:[filename] }).then(()=>{ fs.unlinkSync(filename) })
       })
     })
   }
