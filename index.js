@@ -28,7 +28,7 @@ function unicode(name){
       throw err;
     }
   });
-  return `"${name}"`
+  return `"/app/${name}"`
 }
 
 client.on('ready', ()=>{
