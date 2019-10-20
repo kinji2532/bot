@@ -29,7 +29,6 @@ function unicode(name,message){
     }
   });
   message.channel.send({ files: [name] })
-  fs.unlinkSync(name);
 }
 
 client.on('ready', ()=>{
@@ -59,6 +58,7 @@ client.on('message', message=>{
   }else if(message.content == "uni"){
     message.attachments.forEach(attachment=>{
       let filename = attachment.filename;
+      fs.unlinkSync(filename);
       let write = fs.createWriteStream(filename);
       request.get(attachment.url).on('error',console.error).pipe(write)
       write.on('finish',()=>{
