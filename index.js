@@ -15,7 +15,7 @@ function jsonchecker(name){
 }
 function unicode(name){
   let txt = fs.readFileSync(name,'utf-8');
-  txt = text.replace(/"(.*?)"/g,function(){
+  txt = txt.replace(/"(.*?)"/g,function(){
     let codes = []
     let code = arguments[0].replace(/"/g,'')
     for(let i = 0;i < code.length;i ++){
