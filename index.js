@@ -23,14 +23,13 @@ function unicode(name,message){
     }
     return `"\\u${codes.join('\\u')}"`;
   })
-  fs.writeFile(name,txt,function(err){
+  fs.writeFileSync(name,txt,function(err){
     if(err){
       throw err;
-    }else{
-      message.channel.send({ files: [name] })
-      fs.unlinkSync(name)
     }
   });
+  message.channel.send({ files: [name] })
+  fs.unlinkSync(name);
 }
 
 client.on('ready', ()=>{
