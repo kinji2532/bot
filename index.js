@@ -29,6 +29,7 @@ function unicode(name,message){
     }
   });
   message.channel.send({ files: [name] })
+  fs.unlinkSync(name);
 }
 
 client.on('ready', ()=>{
@@ -62,7 +63,6 @@ client.on('message', message=>{
       request.get(attachment.url).on('error',console.error).pipe(write)
       write.on('finish',()=>{
         unicode(filename,message)
-        fs.unlink(filename);
       })
     })
   }
