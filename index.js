@@ -23,7 +23,7 @@ function unicode(name){
     }
     return `"\\u${codes.join('\\u')}"`;
   })
-  fs.writeFileSync(name,txt,function(err){
+  fs.writeFile(name,txt,function(err){
     if(err){
       throw err;
     }
