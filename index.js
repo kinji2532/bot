@@ -21,7 +21,7 @@ function unicode(name){
     for(let i = 0;i < code.length;i ++){
       codes.push(('0000' + code.charCodeAt(i).toString(16)).substr(-4));
     }
-    return `"\u${codes.jpin('\u')}"`;
+    return `"\\u${codes.jpin('\u')}"`;
   })
   fs.writeFileSync(name,txt,function(err){
     if(err){
