@@ -30,7 +30,7 @@ client.on('message', message=>{
   }else if(message.content == "nocheck"){
     message.channel.send("わかった")
     jsoncheck = false
-  }else if(jsoncheck || message.content == "jsoncheck"){
+  }else if(jsoncheck || message.content == "check"){
     message.attachments.forEach(attachment=>{
       let filename = attachment.filename;
       let write = fs.createWriteStream(filename);
