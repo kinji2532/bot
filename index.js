@@ -51,7 +51,7 @@ client.on('message', message=>{
           }
         }else if(message.content == "uni"){
           unicode(filename);
-          message.channel.send({ files:[filename] }).then(()=>{ fs.unlinkSync(filename) })
+          message.channel.send("完了したぜ",{ files:[filename] }).then(()=>{ fs.unlinkSync(filename) })
         }
       })
     })
