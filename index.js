@@ -13,7 +13,7 @@ function jsonchecker(name){
   }
   return "大丈夫 jsonに異常はないぜ"
 }
-function unicode(name){
+function unicode(name,message){
   let txt = fs.readFileSync(name,'utf-8');
   txt = txt.replace(/"(.*?)"/g,function(){
     let codes = []
@@ -28,7 +28,8 @@ function unicode(name){
       throw err;
     }
   });
-  return `"/app/${name}"`
+  message.channel.send({ files:[`/app/${name}`]})
+  fs.unlinkSync(name);
 }
 
 client.on('ready', ()=>{
@@ -61,8 +62,7 @@ client.on('message', message=>{
       let write = fs.createWriteStream(filename);
       request.get(attachment.url).on('error',console.error).pipe(write)
       write.on('finish',()=>{
-        message.channel.send({ files:[unicode(filename)]})
-        fs.unlinkSync(filename);
+        unicode(filename,message)
       })
     })
   }
