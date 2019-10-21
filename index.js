@@ -39,7 +39,7 @@ function listfiles(name){
         ret.push(path);
         break;
       case 1:
-        ret.push(listfiles(path));
+        ret.push(...listfiles(path));
         break;
       default:
     }
