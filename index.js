@@ -1,9 +1,13 @@
 const { Client, Attachment } = require('discord.js');
 const client = new Client();
 const fs = require('fs');
+const cron = require('node-cron');
 const request = require('request');
-let jsoncheck = false
+const unzip = require('node-unzip-2');
+const rimraf = require('rimraf');
+const zipfolder = require('zip-folder');
 
+//cron.schedule('0 0 0 * * *',()=>{})
 function jsonchecker(name){
   try{
     let txt = fs.readFileSync(name,'utf-8');
@@ -24,6 +28,38 @@ function unicode(name){
     return `"\\u${codes.join('\\u')}"`;
   })
   fs.writeFileSync(name,txt);
+}
+function listfiles(name){
+  const ret = [];
+  const paths = fs.readdirSync(name);
+  paths.forEach(list,()=>{
+    const path = `${name}/${list}`
+    switch(getfiletype(path)){
+      case 0:
+        ret.push(path);
+        break;
+      case 1:
+        ret.push(...listfiles(path));
+        break;
+      default:
+    }
+  })
+  return ret;
+}
+function getfiletype(file){
+  try{
+    const stat = fs.statSync(file);
+    switch (true) {
+      case stat.isFile():
+        return 0;
+      case stat.isDirectory();
+        return 1;
+      default:
+        return 2;
+    }
+  }catch(e){
+    return 2;
+  }
 }
 
 client.on('ready', ()=>{
@@ -46,12 +82,45 @@ client.on('message', message=>{
           if(filename.slice(-5) == ".json"){
             message.channel.send(jsonchecker(filename))
             fs.unlinkSync(filename);
-          }else if(filename.slice(-4) == ".zip"){
+          }else if(filename.slice(-4) == ".zip" || filename.slice(-7) == ".mcpack" || filename.slice(-8) == ".mcaddon"){
             message.channel.send("すまない まだできてないんだ")
           }
         }else if(message.content == "uni"){
-          unicode(filename);
-          message.channel.send("完了したぜ",{ files:[filename] }).then(()=>{ fs.unlinkSync(filename) })
+          if(filename.slice(-4) == ".zip" || filename.slice(-7) == ".mcpack" || filename.slice(-8) == ".mcaddon"){
+            let error = 0;
+            fs.createReadStream(filename)
+              .pipe(unzip.Extract({ path: 'output' }))
+              .on('close',()=>{
+                const filelist = listfiles('output');
+                for(file of filelist){
+                  if(file.slice(-4) == ".json"){
+                    if(jsonchecker(file) == "大丈夫 jsonに異常はないぜ"){
+                      unicode(file);
+                    }else{
+                      message.channel.send(`jsonに不備があるようだ\n${file}`)
+                      error ++;
+                    }
+                  }
+                }
+                fs.unlinkSync(filename)
+                if(error == 0){
+                  zipfolder('output',filename,()=>{
+                    message.channel.send('出来たぜ',{ files:[filename] })
+                      .then(()=>{
+                        rimraf.sync('output');
+                        fs.unlinkSync(filename);
+                      })
+                  })
+                }else{
+                  fs.unlinkSync('output')
+                }
+              })
+          }else{
+            unicode(filename);
+            message.channel.send("完了したぜ",{ files:[filename] }).then(()=>{ fs.unlinkSync(filename) })
+          }
+        }else{
+          fs.unlinkSync(filename)
         }
       })
     })
