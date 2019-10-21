@@ -19,6 +19,7 @@ function jsonchecker(name){
 }
 function unicode(name){
   let txt = fs.readFileSync(name,'utf-8');
+  message.channel.send(JSON.stringify(txt))
   txt = txt.replace(/"(.*?)"/g,function(){
     let codes = []
     let code = arguments[0].replace(/"/g,'')
@@ -103,7 +104,8 @@ client.on('message', message=>{
                       error ++;
                       return;
                     }
-                    unicode(file)
+                    unicode(file);
+                    message.channel.send("変換")
                   }
                 }
                 fs.unlinkSync(filename)
