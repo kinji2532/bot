@@ -19,7 +19,7 @@ function jsonchecker(name){
 }
 function unicode(name){
   let txt = fs.readFileSync(name,'utf-8');
-  txt = JSON.stringify(txt.replace(/\/\/(.*?)\n/g,'')).replace(/\/\*(.*?)\*\//g,'').replace(/"(.*?)"/g,function(){
+  txt = JSON.parse(JSON.stringify(txt.replace(/\/\/(.*?)\n/g,'')).replace(/\/\*(.*?)\*\//g,'')).replace(/"(.*?)"/g,function(){
     let codes = []
     let code = arguments[0].replace(/"/g,'')
     for(let i = 0;i < code.length;i ++){
