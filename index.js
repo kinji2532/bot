@@ -94,12 +94,15 @@ client.on('message', message=>{
                 const filelist = listfiles('output');
                 for(file of filelist){
                   if(file.slice(-4) == ".json"){
-                    if(jsonchecker(file) == "大丈夫 jsonに異常はないぜ"){
-                      unicode(file);
-                    }else{
+                    try{
+                      let txt = fs.readFileSync(name,'utf-8');
+                      JSON.parse(txt)
+                    }catch{
                       message.channel.send(`jsonに不備があるようだ\n${file}`)
                       error ++;
+                      return;
                     }
+                    unicode(file)
                   }
                 }
                 fs.unlinkSync(filename)
