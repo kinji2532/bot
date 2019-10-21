@@ -110,9 +110,9 @@ client.on('message', message=>{
                   zipfolder('output',filename,()=>{
                     message.channel.send('出来たぜ',{ files:[filename] })
                       .then(()=>{
-                        message.channel.send(filelist)
+                        message.channel.send(JSON.stringify(filelist))
                         rimraf.sync('output');
-                        fs.unlinkSync(JSON.stringify(filename));
+                        fs.unlinkSync(filename);
                       })
                   })
                 }else{
