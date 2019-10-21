@@ -112,7 +112,7 @@ client.on('message', message=>{
                       .then(()=>{
                         message.channel.send(filelist)
                         rimraf.sync('output');
-                        fs.unlinkSync(filename);
+                        fs.unlinkSync(JSON.stringify(filename));
                       })
                   })
                 }else{
