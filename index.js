@@ -19,7 +19,6 @@ function jsonchecker(name){
 }
 function unicode(name){
   let txt = fs.readFileSync(name,'utf-8');
-  message.channel.send(JSON.stringify(txt))
   txt = txt.replace(/"(.*?)"/g,function(){
     let codes = []
     let code = arguments[0].replace(/"/g,'')
