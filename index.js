@@ -101,7 +101,7 @@ client.on('message', message=>{
                     }catch{
                       message.channel.send(`jsonに不備があるようだ\n${file}`)
                       error ++;
-                      return;
+                      break;
                     }
                     unicode(file);
                   }
@@ -111,7 +111,6 @@ client.on('message', message=>{
                   zipfolder('output',filename,()=>{
                     message.channel.send('出来たぜ',{ files:[filename] })
                       .then(()=>{
-                        message.channel.send(JSON.stringify(filelist))
                         rimraf.sync('output');
                         fs.unlinkSync(filename);
                       })
