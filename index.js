@@ -95,7 +95,7 @@ client.on('message', message=>{
                 const filelist = listfiles('output');
                 for(file of filelist){
                   message.channel.send(file)
-                  if(file.slice(-4) == ".json"){
+                  if(file.slice(-5) == ".json"){
                     try{
                       let txt = fs.readFileSync(file,'utf-8');
                       JSON.parse(txt)
