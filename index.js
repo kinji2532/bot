@@ -95,7 +95,7 @@ client.on('message', message=>{
                 for(file of filelist){
                   if(file.slice(-4) == ".json"){
                     try{
-                      let txt = fs.readFileSync(name,'utf-8');
+                      let txt = fs.readFileSync(file,'utf-8');
                       JSON.parse(txt)
                     }catch{
                       message.channel.send(`jsonに不備があるようだ\n${file}`)
@@ -110,6 +110,7 @@ client.on('message', message=>{
                   zipfolder('output',filename,()=>{
                     message.channel.send('出来たぜ',{ files:[filename] })
                       .then(()=>{
+                        message.channel.send(filelist)
                         rimraf.sync('output');
                         fs.unlinkSync(filename);
                       })
