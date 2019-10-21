@@ -32,9 +32,9 @@ function unicode(name){
 function listfiles(name){
   const ret = [];
   const paths = fs.readdirSync(name);
-  paths.forEach(a=>{
+  paths.forEach(list=>{
     const path = `${name}/${list}`
-    switch(getfiletype(a)){
+    switch(getfiletype(path)){
       case 0:
         ret.push(path);
         break;
