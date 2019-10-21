@@ -12,7 +12,7 @@ function jsonchecker(name){
   try{
     let txt = fs.readFileSync(name,'utf-8');
     txt = JSON.parse(JSON.stringify(txt.replace(/\/\/(.*?)\n/g,'')).replace(/\/\*(.*?)\*\//g,''))
-    console.log()
+    console.log(txt)
   }catch(e){
     console.log(e.message)
     return "おっと jsonに不備があるようだ"
