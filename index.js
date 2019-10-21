@@ -52,7 +52,7 @@ function getfiletype(file){
     switch (true) {
       case stat.isFile():
         return 0;
-      case stat.isDirectory();
+      case stat.isDirectory():
         return 1;
       default:
         return 2;
