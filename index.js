@@ -10,8 +10,8 @@ const zipfolder = require('zip-folder');
 //cron.schedule('0 0 0 * * *',()=>{})
 function jsonchecker(name){
   try{
-    let txt = fs.readFileSync(name,'utf-8').replace(/\/\/(.*?)\n/g,'')
-    let text = JSON.parse(JSON.stringify(txt).replace(/\/\*(.*?)\*\//g,''))
+    let txt = fs.readFileSync(name,'utf-8');
+    txt = JSON.parse(JSON.stringify(txt.replace(/\/\/(.*?)\n/g,'')).replace(/\/\*(.*?)\*\//g,''))
   }catch{
     return "おっと jsonに不備があるようだ"
   }
@@ -19,7 +19,7 @@ function jsonchecker(name){
 }
 function unicode(name){
   let txt = fs.readFileSync(name,'utf-8');
-  txt = txt.replace(/"(.*?)"/g,function(){
+  txt = JSON.stringify(txt.reeplace(/\/\/(.*?)\n/g,'')).replace(/\/\*(.*?)\*\//g,'').replace(/"(.*?)"/g,function(){
     let codes = []
     let code = arguments[0].replace(/"/g,'')
     for(let i = 0;i < code.length;i ++){
