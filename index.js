@@ -93,7 +93,6 @@ client.on('message', message=>{
               .on('close',()=>{
                 const filelist = listfiles('output');
                 for(file of filelist){
-                  message.channel.send(file)
                   if(file.slice(-5) == ".json"){
                     try{
                       let txt = fs.readFileSync(file,'utf-8');
@@ -104,7 +103,6 @@ client.on('message', message=>{
                       return;
                     }
                     unicode(file);
-                    message.channel.send("変換")
                   }
                 }
                 fs.unlinkSync(filename)
