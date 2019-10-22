@@ -93,7 +93,9 @@ client.on('message', message=>{
               .pipe(unzip.Extract({ path: 'output' }))
               .on('close',()=>{
                 const filelist = listfiles('output');
+                console.log(filelist)
                 for(file of filelist){
+                  console.log(file)
                   if(file.slice(-5) == ".json"){
                     try{
                       let txt = fs.readFileSync(file,'utf-8');
