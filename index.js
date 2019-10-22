@@ -93,21 +93,16 @@ client.on('message', message=>{
               .pipe(unzip.Extract({ path: 'output' }))
               .on('close',()=>{
                 const filelist = listfiles('output');
-                console.log(filelist)
                 for(file of filelist){
-                  console.log(file)
                   if(file.slice(-5) == ".json"){
                     try{
-                      console.log('jsoncheck')
                       let txt = fs.readFileSync(file,'utf-8');
                       JSON.parse(txt.replace(/\/\/(.*?)\n|\n/g,'').replace(/\/\*(.*?)\*\//g,''))
                     }catch{
-                      console.log('nojson')
                       message.channel.send(`jsonに不備があるようだ\n${file}`)
                       error ++;
                       continue;
                     }
-                    console.log('clear')
                     unicode(file);
                   }
                 }
