@@ -7,7 +7,9 @@ const unzip = require('node-unzip-2');
 const rimraf = require('rimraf');
 const zipfolder = require('zip-folder');
 
-//cron.schedule('0 0 0 * * *',()=>{})
+cron.schedule('0 0 0 * * *',()=>{
+  client.channels.get('599272915153715201').send("午前０時をお知らせするぜ")
+})
 function jsonchecker(name){
   try{
     let txt = fs.readFileSync(name,'utf-8');
