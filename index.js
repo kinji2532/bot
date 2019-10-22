@@ -121,7 +121,7 @@ client.on('message', message=>{
                       })
                   })
                 }else{
-                  console.log(fs.readdir('/app'))
+                  console.log(fs.readdirSync('/app'))
                   fs.unlinkSync('output')
                 }
               })
