@@ -105,7 +105,7 @@ client.on('message', message=>{
                       console.log('nojson')
                       message.channel.send(`jsonに不備があるようだ\n${file}`)
                       error ++;
-                      break;
+                      continue;
                     }
                     console.log('clear')
                     unicode(file);
