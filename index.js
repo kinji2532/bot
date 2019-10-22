@@ -11,7 +11,7 @@ const zipfolder = require('zip-folder');
 function jsonchecker(name){
   try{
     let txt = fs.readFileSync(name,'utf-8');
-    txt = JSON.parse(txt.replace(/\/\/(.*?)\n|\n/g,'').replace(/\/\*(.*?)\*\//g,''))
+    txt = JSON.parse(JSON.stringify(txt.replace(/\/\/(.*?)\n/g,'')).replace(/\/\*(.*?)\*\//g,''))
   }catch(e){
     console.log(e.message)
     return "おっと jsonに不備があるようだ"
@@ -97,7 +97,7 @@ client.on('message', message=>{
                   if(file.slice(-5) == ".json"){
                     try{
                       let txt = fs.readFileSync(file,'utf-8');
-                      JSON.parse(txt.replace(/\/\/(.*?)\n|\/\*(.*?)\*\//g,''))
+                      JSON.parse(txt.replace(/\/\/(.*?)\n|\/\*/g,''))
                     }catch{
                       message.channel.send(`jsonに不備があるようだ\n${file}`)
                       error ++;
