@@ -100,14 +100,15 @@ client.on('message', message=>{
               .pipe(unzip.Extract({ path: 'output' }))
               .on('close',()=>{
                 const filelist = listfiles('output');
-                console.log('filelist')
+                console.log(filelist)
                 for(file of filelist){
                   if(file.slice(-5) == ".json"){
                     try{
                       let txt = fs.readFileSync(file,'utf-8');
                       JSON.parse(txt.replace(/\/\/(.*?)\n|\n/g,'').replace(/\/\*(.*?)\*\//g,''))
-                    }catch{
+                    }catch(e){
                       message.channel.send(`jsonに不備があるようだ\n${file}`)
+                      console.log(`${file}\n${e.message}`)
                       error ++;
                       continue;
                     }
