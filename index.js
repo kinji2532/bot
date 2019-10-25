@@ -13,6 +13,7 @@ cron.schedule('0 0 15 * * *',()=>{
 function jsonchecker(name){
   try{
     let txt = fs.readFileSync(name,'utf-8');
+    console.log(txt)
     console.log(txt.replace(/\/\/(.*?)\n|\n/g,'').replace(/\/\*(.*?)\*\//g,''))
     JSON.parse(txt.replace(/\/\/(.*?)\n|\n/g,'').replace(/\/\*(.*?)\*\//g,''))
   }catch(e){
