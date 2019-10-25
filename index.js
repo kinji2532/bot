@@ -108,7 +108,7 @@ client.on('message', message=>{
                       JSON.parse(txt.replace(/\/\/(.*?)\n| |\n/g,'').replace(/\/\*(.*?)\*\//g,''))
                     }catch(e){
                       message.channel.send(`jsonに不備があるようだ\n${file}`)
-                      console.log(txt.replace(/\/\/(.*?)\n/g,'').replace(/\/\*(.*?)\*\//g,''))
+                      console.log(txt + '\n\n' + txt.replace(/\/\/(.*?)\n/g,'').replace(/\/\*(.*?)\*\//g,''))
                       error ++;
                       continue;
                     }
