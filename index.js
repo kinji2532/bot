@@ -15,7 +15,7 @@ function jsonchecker(name){
     let txt = fs.readFileSync(name,'utf-8');
     JSON.parse(txt.replace(/\/\/(.*?)\n|\n/g,'').replace(/\/\*(.*?)\*\//g,''))
   }catch(e){
-    console.log(e.message)
+    console.log(name + '\n' + e.message)
     return "おっと jsonに不備があるようだ"
   }
   return "大丈夫 jsonに異常はないぜ"
@@ -102,10 +102,8 @@ client.on('message', message=>{
                 const filelist = listfiles('output');
                 console.log('filelist')
                 for(file of filelist){
-                  console.log(file)
                   if(file.slice(-5) == ".json"){
                     try{
-                      console.log('jsoncheck')
                       let txt = fs.readFileSync(file,'utf-8');
                       JSON.parse(txt.replace(/\/\/(.*?)\n|\n/g,'').replace(/\/\*(.*?)\*\//g,''))
                     }catch{
@@ -113,7 +111,6 @@ client.on('message', message=>{
                       error ++;
                       continue;
                     }
-                    console.log('clear')
                     unicode(file);
                   }
                 }
