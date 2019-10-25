@@ -13,8 +13,8 @@ cron.schedule('0 0 15 * * *',()=>{
 function jsonchecker(name){
   try{
     let txt = fs.readFileSync(name,'utf-8');
-    JSON.parse(txt.replace(/\/\/(.*?)\n|\n/g,'').replace(/\/\*(.*?)\*\//g,''))
     console.log(txt.replace(/\/\/(.*?)\n|\n/g,'').replace(/\/\*(.*?)\*\//g,''))
+    JSON.parse(txt.replace(/\/\/(.*?)\n|\n/g,'').replace(/\/\*(.*?)\*\//g,''))
   }catch(e){
     console.log(name + '\n' + e.message)
     return "おっと jsonに不備があるようだ"
