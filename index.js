@@ -7,7 +7,7 @@ const unzip = require('node-unzip-2');
 const rimraf = require('rimraf');
 const zipfolder = require('zip-folder');
 
-cron.schedule('0 0 0 * * *',()=>{
+cron.schedule('0 0 15 * * *',()=>{
   client.channels.get('599272915153715201').send("午前０時をお知らせするぜ")
 })
 function jsonchecker(name){
@@ -73,9 +73,13 @@ client.on('ready', ()=>{
 
 client.on('message', message=>{
   if(message.author.id == client.user.id)return;
-  else if(message.content.startsWith("//a") && message.author.id == '395010195090178058'){
-    eval(message.content)
-    message.delete();
+  else if((message.content.startsWith("//a") || message.channel.id == '637224720470638612') && message.author.id == '395010195090178058'){
+    try{
+      eval(message.content)
+      message.delete();
+    }catch(e){
+      message.channel.send(e.message)
+    }
   }else{
     message.attachments.forEach(attachment=>{
       let filename = attachment.filename;
