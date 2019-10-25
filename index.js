@@ -13,7 +13,7 @@ cron.schedule('0 0 15 * * *',()=>{
 function jsonchecker(name){
   try{
     let txt = fs.readFileSync(name,'utf-8');
-    JSON.parse(txt.replace(/\/\/(.*?)\n|\n/g,'').replace(/\/\*(.*?)\*\//g,''))
+    JSON.parse(txt.replace(/\/\/(.*?)\n| |\n/g,'').replace(/\/\*(.*?)\*\//g,''))
   }catch(e){
     console.log(name + '\n' + e.message)
     return "おっと jsonに不備があるようだ"
@@ -104,8 +104,7 @@ client.on('message', message=>{
                   if(file.slice(-5) == ".json"){
                     try{
                       let txt = fs.readFileSync(file,'utf-8');
-                      console.log(JSON.stringify(txt.replace(/\/\/(.*?)\n|\n/g,'').replace(/\/\*(.*?)\*\//g,''),null,2))
-                      JSON.parse(txt.replace(/\/\/(.*?)\n|\n/g,'').replace(/\/\*(.*?)\*\//g,''))
+                      console.log(JSON.stringify(JSON.parse(txt.replace(/\/\/(.*?)\n| |\n/g,'').replace(/\/\*(.*?)\*\//g,'')),null,2))
                     }catch(e){
                       message.channel.send(`jsonに不備があるようだ\n${file}`)
                       console.log(`${file}[${e.message}]`)
