@@ -67,7 +67,8 @@ function getfiletype(file){
 
 client.on('ready', ()=>{
   console.log(`Logged in as ${client.user.tag}!`);
-  client.channels.get('599272915153715201').send("リログしたぜ。")
+  client.channels.get('637224720470638612').bulkDelete(100)
+  client.channels.get('637224720470638612').send("リログしたぜ。")
 })
 
 client.on('message', message=>{
