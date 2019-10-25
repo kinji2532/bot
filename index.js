@@ -102,8 +102,9 @@ client.on('message', message=>{
                 const filelist = listfiles('output');
                 for(file of filelist){
                   if(file.slice(-5) == ".json"){
+                    let txt;
                     try{
-                      let txt = fs.readFileSync(file,'utf-8');
+                      txt = fs.readFileSync(file,'utf-8');
                       JSON.parse(txt.replace(/\/\/(.*?)\n| |\n/g,'').replace(/\/\*(.*?)\*\//g,''))
                     }catch(e){
                       message.channel.send(`jsonに不備があるようだ\n${file}`)
