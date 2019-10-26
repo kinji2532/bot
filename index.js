@@ -109,18 +109,14 @@ client.on('message', message=>{
               .on('close',()=>{
                 const filelist = listfiles('output');
                 for(file of filelist){
-                  try{
-                    if(file.slice(-5) == ".json"){
-                      if(jsonchecker(file)){
-                        unicode(file);
-                      }else{
-                        message.channel.send(`jsonに不備があるようだ\n${file}`)
-                        error ++;
-                        continue;
-                      }
+                  if(file.slice(-5) == ".json"){
+                    if(jsonchecker(file)){
+                      unicode(file);
+                    }else{
+                      message.channel.send(`jsonに不備があるようだ\n${file}`)
+                      error ++;
+                      continue;
                     }
-                  }catch(e){
-                    message.channel.send(e.channel)
                   }
                 }
                 fs.unlinkSync(filename)
