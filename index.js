@@ -16,9 +16,9 @@ function jsonchecker(name){
     JSON.parse(txt.replace(/\r/g,'\n').replace(/\/\/(.*?)\n| |\n|\/\*(.*?)\*\//g,''))
   }catch(e){
     console.log(name + '\n' + e.message)
-    return "おっと jsonに不備があるようだ"
+    return false
   }
-  return "大丈夫 jsonに異常はないぜ"
+  return true
 }
 function unicode(name){
   let txt = fs.readFileSync(name,'utf-8');
@@ -92,7 +92,11 @@ client.on('message', message=>{
       write.on('finish',()=>{
         if(message.content == "check"){
           if(filename.slice(-5) == ".json"){
-            message.channel.send(jsonchecker(filename))
+            if(jsonchecker(filename)){
+              message.channel.send("大丈夫 jsonに異常はないぜ")
+            }else{
+              message.channel.send("おっと jsonに不備があるようだ")
+            }
             fs.unlinkSync(filename);
           }else if(filename.slice(-4) == ".zip" || filename.slice(-7) == ".mcpack" || filename.slice(-8) == ".mcaddon"){
             message.channel.send("すまない まだできてないんだ")
@@ -105,17 +109,18 @@ client.on('message', message=>{
               .on('close',()=>{
                 const filelist = listfiles('output');
                 for(file of filelist){
-                  if(file.slice(-5) == ".json"){
-                    try{
-                      let txt = fs.readFileSync(file,'utf-8');
-                      JSON.parse(txt.replace(/\/\/(.*?)\n|\n/g,'').replace(/\/\*(.*?)\*\//g,''))
-                    }catch(e){
-                      message.channel.send(`jsonに不備があるようだ\n${file}`)
-                      console.log(`${file}[${e.message}]`)
-                      error ++;
-                      continue;
+                  try{
+                    if(file.slice(-5) == ".json"){
+                      if(jsonchecker(file)){
+                        unicode(file);
+                      }else{
+                        message.channel.send(`jsonに不備があるようだ\n${file}`)
+                        error ++;
+                        continue;
+                      }
                     }
-                    unicode(file);
+                  }catch(e){
+                    message.channel.send(e.channel)
                   }
                 }
                 fs.unlinkSync(filename)
