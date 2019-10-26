@@ -106,9 +106,9 @@ client.on('message', message=>{
           if(filename.slice(-4) == ".zip" || filename.slice(-7) == ".mcpack" || filename.slice(-8) == ".mcaddon"){
             let error = 0;
             fs.createReadStream(filename)
-              .pipe(unzip.Extract({ path: 'output' }))
+              .pipe(unzip.Extract({ path: 'file' }))
               .on('close',()=>{
-                const filelist = listfiles('output');
+                const filelist = listfiles('file');
                 for(file of filelist){
                   if(file.slice(-5) == ".json"){
                     if(jsonchecker(file)){
@@ -120,10 +120,10 @@ client.on('message', message=>{
                   }
                 }
                 fs.unlinkSync(filename)
-                zipfolder('output',filename,()=>{
+                zipfolder('file',filename,()=>{
                   message.channel.send('出来たぜ',{ files:[filename] })
                     .then(()=>{
-                      rimraf.sync('output');
+                      rimraf.sync('file');
                       fs.unlinkSync(filename);
                     })
                 })
