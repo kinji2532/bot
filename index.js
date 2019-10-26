@@ -6,7 +6,7 @@ const request = require('request');
 const unzip = require('node-unzip-2');
 const rimraf = require('rimraf');
 const zipfolder = require('zip-folder');
-
+let errmsg;
 cron.schedule('0 0 15 * * *',()=>{
   client.channels.get('599272915153715201').send("午前０時をお知らせするぜ")
 })
@@ -16,6 +16,7 @@ function jsonchecker(name){
     JSON.parse(txt.replace(/\r/g,'\n').replace(/\/\/(.*?)\n| |\n/g,'').replace(/\/\*(.*?)\*\//g,''))
   }catch(e){
     console.log(name + '\n' + e.message)
+    errmsg = e.message;
     return false
   }
   return true
@@ -95,7 +96,7 @@ client.on('message', message=>{
             if(jsonchecker(filename)){
               message.channel.send("大丈夫 jsonに異常はないぜ")
             }else{
-              message.channel.send("おっと jsonに不備があるようだ")
+              message.channel.send(`おっと jsonに不備があるようだ\n${errmsg}`)
             }
             fs.unlinkSync(filename);
           }else if(filename.slice(-4) == ".zip" || filename.slice(-7) == ".mcpack" || filename.slice(-8) == ".mcaddon"){
@@ -113,28 +114,23 @@ client.on('message', message=>{
                     if(jsonchecker(file)){
                       unicode(file);
                     }else{
-                      message.channel.send(`jsonに不備があるようだ\n${file}`)
-                      error ++;
-                      continue;
+                      message.channel.send(`jsonに不備があるようだ\n${file}\n${errmsg}\n消しておくぜ`)
+                      fs.unlinkSync(file)
                     }
                   }
                 }
                 fs.unlinkSync(filename)
-                if(error == 0){
-                  zipfolder('output',filename,()=>{
-                    message.channel.send('出来たぜ',{ files:[filename] })
-                      .then(()=>{
-                        rimraf.sync('output');
-                        fs.unlinkSync(filename);
-                      })
-                  })
-                }else{
-                  rimraf.sync('output')
-                }
+                zipfolder('output',filename,()=>{
+                  message.channel.send('出来たぜ',{ files:[filename] })
+                    .then(()=>{
+                      rimraf.sync('output');
+                      fs.unlinkSync(filename);
+                    })
+                })
               })
           }else{
             unicode(filename);
-            message.channel.send("完了したぜ",{ files:[filename] }).then(()=>{ fs.unlinkSync(filename) })
+            message.channel.send("出来たぜ",{ files:[filename] }).then(()=>{ fs.unlinkSync(filename) })
           }
         }else{
           fs.unlinkSync(filename)
