@@ -13,8 +13,6 @@ cron.schedule('0 0 15 * * *',()=>{
 function jsonchecker(name){
   try{
     let txt = fs.readFileSync(name,'utf-8');
-    console.log(txt)
-    console.log(txt.replace(/\/\/(.*?)\n|\n/g,'').replace(/\/\*(.*?)\*\//g,''))
     JSON.parse(txt.replace(/\/\/(.*?)\n|\n/g,'').replace(/\/\*(.*?)\*\//g,''))
   }catch(e){
     console.log(name + '\n' + e.message)
@@ -69,7 +67,11 @@ function getfiletype(file){
 
 client.on('ready', ()=>{
   console.log(`Logged in as ${client.user.tag}!`);
-  client.channels.get('637224720470638612').bulkDelete(100)
+  client.channels.get('637224720470638612').fetchMessages({ limit: 100 }).then(messages =>{
+    for(data of messages){
+      data[1].delete();
+    }
+  })
   client.channels.get('637224720470638612').send("リログしたぜ。")
 })
 
