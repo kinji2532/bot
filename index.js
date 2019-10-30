@@ -7,9 +7,7 @@ const unzip = require('node-unzip-2');
 const rimraf = require('rimraf');
 const zipfolder = require('zip-folder');
 let errmsg;
-cron.schedule('0 0 15 * * *',()=>{
-  client.channels.get('599272915153715201').send("午前０時をお知らせするぜ")
-})
+
 function jsonchecker(name){
   try{
     let txt = fs.readFileSync(name,'utf-8');
@@ -66,6 +64,20 @@ function getfiletype(file){
   }
 }
 
+cron.schedule('0 0 15 * * *',()=>{
+  client.channels.get('637224720470638612').send("午前０時をお知らせするぜ")
+});
+
+process.on('uncaughttException',(err)=>{
+  client.channels.get('637224720470638612').send("予期せぬエラーが起きたぜ");
+  try{
+    client.channels.get('637224720470638612').send(err.messagge)
+  }catch{}
+  console.log(err)
+  client.destroy();
+  client.login(process.env.BOT_TOKEN);
+});
+
 client.on('ready', ()=>{
   console.log(`Logged in as ${client.user.tag}!`);
   client.channels.get('637224720470638612').fetchMessages({ limit: 100 }).then(messages =>{
@@ -74,7 +86,7 @@ client.on('ready', ()=>{
     }
   })
   client.channels.get('637224720470638612').send("リログしたぜ。")
-})
+});
 
 client.on('message', message=>{
   if(message.author.id == client.user.id)return;
