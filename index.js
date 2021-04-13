@@ -81,4 +81,9 @@ client.on('message', message=>{
   }
 });
 
+client.on('message',message=>messageCode(message));
+client.on('messageReactionAdd',(reaction,user)=>reactionAddCode(reaction,user));
+client.on('messageDelete',message=>deleteCode(message));
+client.on('messageUpdate',(oldMe,newMe)=>updateCode(oldMe,newMe));
+
 client.login(process.env.BOT_TOKEN);
